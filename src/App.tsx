@@ -36,10 +36,12 @@ function App() {
   return (
     <div>
       <h1 className="text-green-800"> ✅ 무한 스크롤 구현 </h1>
-      <div>
-        {data && data?.map((item, index) => <Item key={index} {...item} />)}
-      </div>
-      <button onClick={handleLoadData}>더보기</button>
+      <section>
+        <div>
+          {data && data?.map((item, index) => <Item key={index} {...item} />)}
+        </div>
+        <button onClick={handleLoadData}>더보기</button>
+      </section>
     </div>
   )
 }
