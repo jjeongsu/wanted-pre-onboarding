@@ -76,7 +76,7 @@ function App() {
         현재 가져온 모든 Data 의 갯수 : {data.length}
       </section>
 
-      <section>
+      <section className="flex flex-col items-center justify-center ">
         <div>
           {data && data?.map((item, index) => <Item key={index} {...item} />)}
         </div>
