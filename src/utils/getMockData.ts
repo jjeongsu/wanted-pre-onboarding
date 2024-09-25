@@ -1,12 +1,6 @@
-// 반환되는 데이터의 타입
-interface MockData {
-  productId: string
-  productName: string
-  price: number
-  boughtDate: string
-}
+import { MockData, IResponse } from '../types/mockData'
 
-const MOCK_DATA: MockData[] = [
+export const MOCK_DATA: MockData[] = [
   {
     productId: '66e1c1df3594bb65169e0f9b',
     productName: 'Elegant Granite Fish',
@@ -720,7 +714,7 @@ const MOCK_DATA: MockData[] = [
 const PER_PAGE = 10
 
 // 페이지는 1부터 시작함
-export const getMockData = (pageNum: number) => {
+export function getMockData(pageNum: number): Promise<IResponse> {
   return new Promise(resolve => {
     setTimeout(() => {
       const datas: MockData[] = MOCK_DATA.slice(
