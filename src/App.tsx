@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { getMockData } from './utils/getMockData'
 import Item from './components/Item'
+import ItemListSkeleton from './components/ItemListSkeleton'
 import { MockData, IResponse } from './types/mockData'
-//import { MOCK_DATA } from './utils/getMockData'
 
 const calPriceSum = (data: MockData[]) =>
   data.reduce((acc, curr) => acc + curr.price, 0)
+
 function App() {
-  const [data, setData] = useState<MockData[]>([])
-  const [isMore, setIsMore] = useState<boolean>(false)
-  const [page, setPage] = useState(1)
-  const [totlaPrice, setTotalPrice] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
+  const [data, setData] = useState<MockData[]>([]) //불러온 모든 데이터
+  const [isMore, setIsMore] = useState<boolean>(false) // 불러올 데이터가 더 있는지 여부
+  const [page, setPage] = useState(1) // 불러올 페이지
+  const [totlaPrice, setTotalPrice] = useState(0) // 데이터 내부의 총 가격 합
+  const [isLoading, setIsLoading] = useState(true) // 데이터 로딩중인지 여부 확인
   const target = document.querySelector('#target')
 
   const fetchData = async () => {
@@ -55,10 +56,14 @@ function App() {
   }, [isLoading, data])
 
   const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting && !isLoading && isMore) {
-      setIsLoading(true)
-      fetchData()
-      setPage(prev => prev + 1)
+    if (entries[0].isIntersecting && !isLoading) {
+      if (isMore) {
+        setIsLoading(true)
+        setPage(prev => prev + 1)
+        fetchData()
+      } else {
+        alert('이제 더는 데이터가 없어요..😭')
+      }
     }
   })
 
@@ -70,11 +75,13 @@ function App() {
         <br />
         현재 가져온 모든 Data 의 갯수 : {data.length}
       </section>
+
       <section>
         <div>
           {data && data?.map((item, index) => <Item key={index} {...item} />)}
         </div>
         <div id="target"></div>
+        {isLoading && <ItemListSkeleton count={3} />}
       </section>
     </div>
   )

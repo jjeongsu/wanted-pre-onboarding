@@ -1,5 +1,4 @@
 import { MockData } from '../types/mockData'
-import React from 'react'
 export default function Item(data: MockData) {
   return (
     <div className="border-blue-400 border-2 my-3 rounded-lg py-4">
